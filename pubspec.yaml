@@ -1,5 +1,5 @@
 name: movie_app_iti_gp
-description: "A new Flutter project."
+description: "Production-grade Flutter app with Clean Architecture, Firebase, and REST API."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -31,20 +31,40 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # State management & routing
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.2.0
+
+  # Firebase
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.2.0
+  cloud_firestore: ^5.4.4
+  firebase_messaging: ^15.0.3
+  cloud_functions: ^5.0.3
+
+  # Auth providers
+  google_sign_in: ^6.2.1
+  sign_in_with_apple: ^6.1.0
+
+  # REST API client & utilities
+  dio: ^5.7.0
+  json_annotation: ^4.9.0
+  intl: ^0.19.0
+  package_info_plus: ^8.0.2
+  flutter_local_notifications: ^17.2.3
 
   # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  build_runner: ^2.4.10
+  json_serializable: ^6.8.0
+  mocktail: ^1.0.3
+
+  # Lints
   flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
