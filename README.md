@@ -1,16 +1,36 @@
-# movie_app_iti_gp
+## Student Learning App (Flutter)
 
-A new Flutter project.
+This is a small Flutter app designed for a third-year CS student. The goal is to be easy to read, easy to explain in class, and solid enough for final submission.
 
-## Getting Started
+### What the app does
+- Shows a simple counter you can increase.
+- Gets a random motivational quote from the internet and displays it.
+- Uses friendly language and clear error messages.
 
-This project is a starting point for a Flutter application.
+### Why this is student-friendly
+- Uses Provider with ChangeNotifier for state (simple and popular).
+- Uses plain Dart and small files with clear comments.
+- Avoids complex patterns (no Bloc, no DI frameworks, no channels).
 
-A few resources to get you started if this is your first Flutter project:
+### Project structure (lib/)
+- `main.dart`: App entry, sets up Provider and theme.
+- `app/app_state.dart`: Holds app data like `counter` and `currentQuote`.
+- `services/quote_service.dart`: Small HTTP client for a random quote.
+- `screens/home_screen.dart`: Main UI with buttons and messages.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### How to run
+1) Install Flutter: follow the official docs.
+2) In a terminal, go to the project folder.
+3) Run: `flutter pub get`
+4) Start: `flutter run`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Notes for presentation
+- Explain how `AppState` notifies the UI using `notifyListeners()`.
+- Walk through the quote button: it sets loading, calls the service, and handles errors in plain English.
+- Point to comments in each file to show your understanding.
+
+### Dependencies used
+- `provider`: easy state management for beginners.
+- `http`: simple HTTP calls.
+
+Made with care to be readable and friendly for students, professors, and non-experts.
