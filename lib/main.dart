@@ -1,34 +1,33 @@
-import 'dart:async';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
+import 'app/app_state.dart';
+import 'screens/home_screen.dart';
 
-import 'firebase_options.dart';
-import 'src/app.dart';
-import 'src/core/notifications/notification_service.dart';
-
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+void main() {
+  /// Provider wraps our app with AppState so any screen can read and change it.
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppState(),
+      child: const MyApp(),
+    ),
+  );
 }
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+/// This widget builds the whole app and sets basic colors and routes.
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  // Local notifications init (foreground)
-  await NotificationService.instance.initialize(
-    const AndroidInitializationSettings('@mipmap/ic_launcher'),
-    const DarwinInitializationSettings(),
-  );
-
-  runApp(const ProviderScope(child: App()));
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Student Learning App',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+        useMaterial3: true,
+      ),
+      home: const HomeScreen(),
+    );
+  }
 }
+
+// Old counter screen removed to keep the app focused and simple.
