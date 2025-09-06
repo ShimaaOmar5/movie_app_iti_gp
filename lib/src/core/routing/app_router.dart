@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'dart:async';
 import '../../presentation/auth/sign_in_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/onboarding/onboarding_screen.dart';
 import '../../presentation/splash/splash_screen.dart';
 import '../../application/auth/auth_providers.dart';
 
+// Obtain the actual auth state stream
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authStateChangesProvider);
+  // Directly watch the StreamProvider's stream, not the AsyncValue
+  final authStream = ref.read(authStateChangesProvider.stream);
 
   return GoRouter(
     initialLocation: '/',
     debugLogDiagnostics: false,
-    refreshListenable: GoRouterRefreshStream(authState.asStream()),
+    // Pass the authStream to refreshListenable wrapped by GoRouterRefreshStream
+    refreshListenable: GoRouterRefreshStream(authStream),
     routes: [
       GoRoute(
         path: '/',
@@ -41,7 +44,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final isOnboarding = state.matchedLocation == '/onboarding';
       final isAuthRoute = state.matchedLocation == '/signin';
       final isSplash = state.matchedLocation == '/';
-      final user = authState.value;
+      final userAsyncValue = ref.read(authStateChangesProvider);
+
+      // Only proceed if userAsyncValue has data
+      final user = userAsyncValue.value;
 
       if (isSplash) return null; // Splash will handle first redirect
 
@@ -51,6 +57,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       }
 
       if (isAuthRoute) return '/home';
+
       return null;
     },
   );
@@ -71,4 +78,3 @@ class GoRouterRefreshStream extends ChangeNotifier {
     super.dispose();
   }
 }
-
