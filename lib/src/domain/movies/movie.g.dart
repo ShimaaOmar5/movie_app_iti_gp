@@ -1,21 +1,23 @@
-// GENERATED CODE - MANUAL STUB FOR RUNTIME. Use build_runner to regenerate.
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'movie.dart';
 
-Movie _$MovieFromJson(Map<String, dynamic> json) {
-  return Movie(
-    id: (json['id'] as num).toInt(),
-    title: json['title'] as String?,
-    originalTitle: json['original_title'] as String?,
-    overview: json['overview'] as String?,
-    posterPath: json['poster_path'] as String?,
-    backdropPath: json['backdrop_path'] as String?,
-    releaseDate: json['release_date'] as String?,
-    voteAverage: (json['vote_average'] as num?)?.toDouble(),
-    voteCount: (json['vote_count'] as num?)?.toInt(),
-    popularity: (json['popularity'] as num?)?.toDouble(),
-  );
-}
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
+      id: (json['id'] as num).toInt(),
+      title: json['title'] as String?,
+      originalTitle: json['original_title'] as String?,
+      overview: json['overview'] as String?,
+      posterPath: json['poster_path'] as String?,
+      backdropPath: json['backdrop_path'] as String?,
+      releaseDate: json['release_date'] as String?,
+      voteAverage: (json['vote_average'] as num?)?.toDouble(),
+      voteCount: (json['vote_count'] as num?)?.toInt(),
+      popularity: (json['popularity'] as num?)?.toDouble(),
+    );
 
 Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'id': instance.id,
@@ -29,4 +31,3 @@ Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'vote_count': instance.voteCount,
       'popularity': instance.popularity,
     };
-

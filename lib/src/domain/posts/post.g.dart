@@ -2,6 +2,10 @@
 
 part of 'post.dart';
 
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
 Post _$PostFromJson(Map<String, dynamic> json) => Post(
       id: json['id'] as String,
       title: json['title'] as String,
@@ -15,4 +19,3 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'body': instance.body,
       'authorId': instance.authorId,
     };
-

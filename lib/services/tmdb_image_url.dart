@@ -1,5 +1,5 @@
-/// Helpers to build full TMDB image URLs from path segments.
-/// See https://developer.themoviedb.org/reference/configuration-details for sizes.
+// Helpers to build full TMDB image URLs from path segments.
+// See https://developer.themoviedb.org/reference/configuration-details for sizes.
 
 const String tmdbImageBase = 'https://image.tmdb.org/t/p/';
 
