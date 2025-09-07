@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart' as fb;
-import 'package:google_sign_in/google_sign_in.dart';
+// google_sign_in no longer required for basic GoogleAuthProvider flow with
+// signInWithProvider. We keep the dependency optional but do not import here.
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../domain/auth/auth_repository.dart';
@@ -51,16 +52,8 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<AuthUser> signInWithGoogle() async {
     try {
-      final googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        throw const AuthException('Google sign-in aborted');
-      }
-      final googleAuth = await googleUser.authentication;
-      final credential = fb.GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
-      );
-      final cred = await _auth.signInWithCredential(credential);
+      final fb.GoogleAuthProvider googleProvider = fb.GoogleAuthProvider();
+      final cred = await _auth.signInWithProvider(googleProvider);
       return _mapUser(cred.user)!;
     } on fb.FirebaseAuthException catch (e) {
       throw AuthException(e.message ?? 'Google sign-in failed', cause: e);
