@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 import '../services/quote_service.dart';
+import '../src/domain/movies/movie.dart';
+import '../src/infrastructure/movies/tmdb_movie_repository.dart';
 
 /// AppState is a very small class that holds the main data for our app.
 ///
@@ -21,9 +23,11 @@ class AppState extends ChangeNotifier {
 
   /// This service does the actual HTTP call. It is separated for clarity.
   final QuoteService quoteService;
+  final TmdbMovieRepository movieRepository;
 
-  AppState({QuoteService? quoteService})
-      : quoteService = quoteService ?? QuoteService();
+  AppState({QuoteService? quoteService, TmdbMovieRepository? movieRepository})
+      : quoteService = quoteService ?? QuoteService(),
+        movieRepository = movieRepository ?? TmdbMovieRepository();
 
   /// Increases the counter by 1 and updates the UI.
   void incrementCounter() {
@@ -47,6 +51,24 @@ class AppState extends ChangeNotifier {
           'Sorry, we could not get a quote right now. Please try again.';
     } finally {
       isLoadingQuote = false;
+      notifyListeners();
+    }
+  }
+
+  // ===== Movies (TMDB) =====
+  List<Movie> popularMovies = <Movie>[];
+  bool isLoadingMovies = false;
+
+  Future<void> loadPopularMovies() async {
+    isLoadingMovies = true;
+    lastErrorMessage = null;
+    notifyListeners();
+    try {
+      popularMovies = await movieRepository.getPopular(page: 1);
+    } catch (error) {
+      lastErrorMessage = 'Failed to load movies. Please check your internet connection.';
+    } finally {
+      isLoadingMovies = false;
       notifyListeners();
     }
   }
