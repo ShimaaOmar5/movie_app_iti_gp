@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERRORimport 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../app/app_state.dart';
@@ -9,8 +9,25 @@ import '../services/tmdb_image_url.dart';
 /// - A counter with a + button
 /// - A button to fetch a random quote from the internet
 /// - Friendly messages and simple loading/error states
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch movies on first render.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final appState = context.read<AppState>();
+      if (appState.popularMovies.isEmpty && !appState.isLoadingMovies) {
+        appState.loadPopularMovies();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
